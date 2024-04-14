@@ -137,16 +137,14 @@ public class SettingsValues {
         mKeyPreviewPopupOn = Settings.readKeyPreviewPopupEnabled(prefs, res);
         mSlidingKeyInputPreviewEnabled = prefs.getBoolean(
                 DebugSettings.PREF_SLIDING_KEY_INPUT_PREVIEW, true);
-        mShowsVoiceInputKey = needsToShowVoiceInputKey(prefs, res)
-                && mInputAttributes.mShouldShowVoiceInputKey
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
+        mShowsVoiceInputKey = false;
         mIncludesOtherImesInLanguageSwitchList = Settings.ENABLE_SHOW_LANGUAGE_SWITCH_KEY_SETTINGS
                 ? prefs.getBoolean(Settings.PREF_INCLUDE_OTHER_IMES_IN_LANGUAGE_SWITCH_LIST, false)
                 : true /* forcibly */;
         mShowsLanguageSwitchKey = Settings.ENABLE_SHOW_LANGUAGE_SWITCH_KEY_SETTINGS
                 ? Settings.readShowsLanguageSwitchKey(prefs) : true /* forcibly */;
         mUseContactsDict = prefs.getBoolean(Settings.PREF_KEY_USE_CONTACTS_DICT, true);
-        mUsePersonalizedDicts = prefs.getBoolean(Settings.PREF_KEY_USE_PERSONALIZED_DICTS, true);
+        mUsePersonalizedDicts = prefs.getBoolean(Settings.PREF_KEY_USE_PERSONALIZED_DICTS, false);
         mUseDoubleSpacePeriod = prefs.getBoolean(Settings.PREF_KEY_USE_DOUBLE_SPACE_PERIOD, true)
                 && inputAttributes.mIsGeneralTextInput;
         mBlockPotentiallyOffensive = Settings.readBlockPotentiallyOffensive(prefs, res);
@@ -368,7 +366,7 @@ public class SettingsValues {
                     .remove(Settings.PREF_VOICE_MODE_OBSOLETE)
                     .apply();
         }
-        return prefs.getBoolean(Settings.PREF_VOICE_INPUT_KEY, true);
+        return prefs.getBoolean(Settings.PREF_VOICE_INPUT_KEY, false);
     }
 
     public String dump() {
